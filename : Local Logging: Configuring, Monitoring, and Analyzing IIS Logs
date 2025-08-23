@@ -1,0 +1,83 @@
+Internet Information Services (IIS) is a web server for Windows server that hosts anything (Content or Services) on the Web. Monitoring IIS logs can give insight about user activities detect any anomalous behavior. IIS logs can be examined to understand potential security breaches.
+
+
+Lab Scenario
+IIS log file provides useful information regarding the person who visited your site, what information is viewed and when it is viewed, the activity of various web applications, etc. As a SOC analyst, the information in IIS logs can help you to detect threats on the web applications.
+
+
+Lab Objectives
+The objective of this lab is to help students learn how to configure, view, and analyze logs in IIS.
+
+
+
+Lab Tasks
+1.launch WinServe2012 Machine.
+Click Ctrl+Alt+Delete link.
+ 
+2.	Ensure you are an Administrator account.
+ 
+3.	To open IIS Manager, click on the windows start button and click Administrative tools.
+ 
+4.	Administrative tools window appears, double click on Internet Information Services (IIS) Manager.
+ 
+5.	Internet Information Services (IIS) Manager window appears, click WINSERVER2012 from the Connections pane. IIS logging is enabled by default. To ensure the same double-click Logging feature in the IIS section.
+A pop-up saying "Do you want to get started with Microsoft Web Platform to stay connected with the latest Web Platform Components?" appear, check Do not show this message checkbox and click No
+ 
+6.	Logging section appears, If it shows Disable in the Actions pane, it indicates that IIS logging is enabled.
+This is a toggle link if you click on Disable it will disable IIS logging and the text will change to Enable.
+ 
+7.	To view all the sites hosted on the web server, expand WINSERVER2012 Server Name node. Select the Sites node. In the sites pane you will see the list of websites hosted on the Server.Note the ID column associated with Luxurytreats website is 2. This ID will be used for finding the logs folder for luxurytreats website.
+ 
+8.	To view the location of the log file of luxurytreats website, expand the Sites node and click on LuxuryTreats website. Double-click the Logging feature under IIS section in the LuxuryTreats Home pane.
+ 
+9.	The Logging pane will appear. In the Directory field, you can see the location of the log file, where IIS logs get stored.
+ 
+10.	To include additional fields in IIS logs, click Select Fields….
+11.	Select the fields Client IP Address (c-ip), User Name (cs-username), Protocol Status (sc-status), Protocol Substatus (sc-substatus), Bytes Sent (sc-bytes), Bytes Received (cs-bytes), Host (cs-host), User Agent (cs(User-Agent)), Cookie (cs(Cookie)), Referer (cs(Referer)) and click OK.
+If the above fields are already selected, leave them selected.
+ 
+12.	Click Apply in the Actions pane. An alert will be displayed showing, "The changes have been successfully saved."
+ 
+13.	Close Internet Information Service (IIS) Manager and Administrative Tools window .
+14.	Now, click Kali Linux to launch Kali Linux Machine. To login, drag the blue screen upwards.
+If you are already logged in as root skip to step 15.
+15.	Type root in the Username field and press Enter.
+ 
+16.	Type toor in the password field and press Enter.
+ 
+17.	To open the browser, click on the Firefox icon from the favourites bar.
+18.	To browse Luxurytreats website, enter the link http://www.luxurytreats.com and press Enter. Luxurytreats home page appears.
+Please type the complete URL www.luxurytreats.com or http://www.luxurytreats.com as mentioned in the above instruction. Do not type incomplete URL such as luxurytreats.com; otherwise, it will redirect you to some external website on the internet.
+ 
+19.	Assuming you are a registered member in luxurytreats website login using following credential:
+USERNAME: bob PASSWORD: Passw0rd
+If save password pop-up appears, close it.
+If Reader View pop-up appears, close it.
+20.	You will see Welcome bob in Home Page.
+ 
+21.	To view the orders placed by Bob, hover mouse on the left corner of the website, click on My Orders.
+ 
+22.	List of orders will be displayed. To view the details of Order ORD-001, click on Order Id ORD-001 link.
+   
+23.	You will see the Order details of the selected order ORD-001.
+ 
+24.	To demonstrate SQL Injection, alter the URL in the previous step as follows. http://www.luxurytreats.com/OrderDetail.aspx?Id=ORD-001 ' or 1=1;-- and press Enter.
+Adding ' or 1=1;-- to the URL is a SQL Injection based attempt, to retrive additional information from the database. SQL Query with 1=1 is always True and if there is no proper input validation performed before executing the query, altering the URL will return all rows from the Orders table.
+   
+25.	This trick will fetch the order details of the other users.
+ 
+26.	This is possible because website is vulnerable to SQL injection attacks. When attacker passes such type of SQL injection specific query, it will bypass the security mechanism (authentication) imposed by the application and reveals sensitive data.
+27.	Click Logout from top right corner of the page to logout from luxurytreats website. Close the browser.
+28.	Click WinServer2012 machine. To view IIS logs of the performed SQL injection attempt, navigate to C:\inetpub\logs\logFiles. You will find folder with W3SVC followed by the ID of the site. (Here, W3SVC2 folder contains log files for LuxuryTreats (ID 2) website.(Refer Step:7).
+ 
+29.	Double-click on the folder (here, W3SVC2), the log file(s) will be generated in the format (u_ex YYMMDD).
+30.	Open the latest file with Notepad. Right-click on the file and click Edit with Notepad++.
+ 
+31.	Search for SQL injection specific logs (1=1;--) in log file.
+ 
+32.	In this way, IIS keeps track of various activities on applications in the form of logs. Close all the open windows.
+Do not cancel the lab session. You will need the configurations done in this exercise for the upcomming exercises of this module. In case, if you cancel the lab session, you need to perform this lab steps again..
+End of the Exercise
+In this exercise you have learnt how to configure, view, and analyze logs in IIS.
+Assessment 3.2.1:
+What is the string used in IIS logs while searching for SQL injection specific logs?
